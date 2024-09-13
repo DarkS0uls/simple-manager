@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.Integer?>
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.sr.simplemanager.InventoryAppController" prefHeight="400"
+      prefWidth="800">
+
+    <!-- Header with logo, title, and button -->
+    <HBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" alignment="CENTER">
+
+        <Region HBox.hgrow="ALWAYS" /> <!-- Espacio flexible -->
+        <Text text="INVENTARIO" style="-fx-font-size: 24px;"/>
+        <Region HBox.hgrow="ALWAYS" /> <!-- Espacio flexible -->
+        <Button text="" fx:id="selectDatabaseButton" onAction="#openDatabaseDialog">
+            <graphic>
+                <ImageView fitHeight="40" fitWidth="40">
+                    <image>
+                        <Image url="@images/menu.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <!-- Date pickers, search button and additional filters -->
+    <TitledPane text="Filtros" collapsible="true">
+        <content>
+            <GridPane hgap="10" vgap="10">
+                <Text text="FECHA INICIAL**" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <DatePicker fx:id="startDatePicker"
+                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Text text="FECHA FINAL**" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <DatePicker fx:id="endDatePicker"
+                            GridPane.columnIndex="1"
+                            GridPane.rowIndex="1"/>
+
+                <Text text="SN-IMEI" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField promptText="SN-IMEI" fx:id="snImeiField" maxWidth="200" GridPane.columnIndex="1"
+                           GridPane.rowIndex="2"/>
+                <Text text="EMPRESA" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField promptText="Empresa" fx:id="empresaField" maxWidth="200" GridPane.columnIndex="1"
+                           GridPane.rowIndex="3"/>
+
+
+                <Text text="REF" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <TextField promptText="REF" fx:id="refField" maxWidth="200" GridPane.columnIndex="3"
+                           GridPane.rowIndex="0"/>
+
+
+
+                <Text text="PROVEEDOR" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <TextField promptText="Proveedor" fx:id="proveedorField" maxWidth="200" GridPane.columnIndex="3"
+                           GridPane.rowIndex="1"/>
+
+                <Text text="CLIENTE" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                <TextField promptText="Cliente" fx:id="clienteField" maxWidth="200" GridPane.columnIndex="3"
+                           GridPane.rowIndex="2"/>
+
+
+                <!-- ORDENAR -->
+                <Text text="ORDENAR:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                <Text text="ATRIBUTO:" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                <ComboBox fx:id="orderByComboBox" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList" >
+                            <String fx:value="FECHA COMPRA" />
+                            <String fx:value="PRECIO COSTE" />
+                            <String fx:value="PRECIO VENTA" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Text text="ORDEN:" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="orderTypeComboBox" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="ASC" />
+                            <String fx:value="DESC" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+
+                <!-- INFORMACION PAGINACION -->
+
+                <Text text="TOTAL DE ELEMENTOS:" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+                <Text fx:id="totalElementsText" GridPane.columnIndex="10" GridPane.rowIndex="0" GridPane.halignment="LEFT"/>
+
+                <Text text="TOTAL DE PAGINAS:" GridPane.columnIndex="9" GridPane.rowIndex="1" GridPane.halignment="RIGHT"/>
+                <Text fx:id="totalPagesText" GridPane.columnIndex="10" GridPane.rowIndex="1" GridPane.halignment="LEFT"/>
+
+                <Text text="PAGINA ACTUAL:" GridPane.columnIndex="9" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/>
+                <Text fx:id="currentPageText" GridPane.columnIndex="10" GridPane.rowIndex="2" GridPane.halignment="LEFT"/>
+
+                <!-- INFORMACION DE FILTRO-->
+
+
+
+
+
+                <Button fx:id="searchButton" onAction="#search" GridPane.columnIndex="1"
+                        GridPane.rowIndex="4" maxWidth="Infinity" text="CONSULTAR">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image >
+                                <!-- Asegúrate de reemplazar "path/to/search-icon.png" con la ruta correcta a tu imagen en el proyecto -->
+                                <Image url="@images/search-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+
+                </Button>
+
+                <Button  fx:id="importButton" GridPane.columnIndex="2" onAction="#handleImportButtonAction"
+                        GridPane.rowIndex="4" text="IMPORTAR">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image>
+                                <!-- Asegúrate de reemplazar "path/to/search-icon.png" con la ruta correcta a tu imagen en el proyecto -->
+                                <Image url="@images/import-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+
+                </Button>
+                <Button  fx:id="exportButton" GridPane.columnIndex="3"
+                        GridPane.rowIndex="4" text="EXPORTAR" onAction="#handlerExportButtonAction">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image>
+                                <!-- Asegúrate de reemplazar "path/to/search-icon.png" con la ruta correcta a tu imagen en el proyecto -->
+                                <Image url="@images/export-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+
+                </Button>
+            </GridPane>
+        </content>
+    </TitledPane>
+
+    <!-- Table view -->
+    <TableView fx:id="dataTable" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" >
+        <columns>
+            <TableColumn fx:id="rowNumberCol" prefWidth="75.0" text="#" />
+            <TableColumn fx:id="snImeiColumn" text="SN-IMEI"/>
+            <TableColumn fx:id="refColumn" text="REF"/>
+            <TableColumn fx:id="purchaseDateColumn" text="FECHA COMPRA"/>
+            <TableColumn fx:id="costPriceColumn" text="PRECIO COSTE"/>
+            <TableColumn fx:id="supplierColumn" text="PROVEEDOR"/>
+            <TableColumn fx:id="salePriceColumn" text="PRECIO VENTA"/>
+            <TableColumn fx:id="clientColumn" text="CLIENTE"/>
+            <TableColumn fx:id="company" text="EMPRESA"/>
+
+            <TableColumn fx:id="descriptionColumn" text="DESCRIPCIÓN"/>
+        </columns>
+    </TableView>
+<!--espacio en blanco al final del VBox-->
+    <!-- ComboBox para seleccionar la página actual -->
+    <!-- Contenedor horizontal para los ComboBox y sus etiquetas -->
+    <HBox spacing="10">
+        <!-- Etiqueta y ComboBox para seleccionar la página actual -->
+        <Label text="Página:" />
+        <TextField fx:id="pageInputField" maxWidth="100" />
+
+        <!-- Etiqueta y ComboBox para seleccionar el tamaño de la página -->
+        <Label text="Tamaño de página:" />
+        <ComboBox fx:id="pageSizeComboBox">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Integer fx:value="100" />
+                    <Integer fx:value="200" />
+                    <Integer fx:value="500" />
+                    <Integer fx:value="1000" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </HBox>
+    <Region minHeight="50"/>
+
+</VBox>
